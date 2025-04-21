@@ -1,41 +1,36 @@
-﻿using static DelegateUseCase.ClassOne;
-
+﻿
 namespace DelegateUseCase
 {
-    
+    public class ClassOne {
+        private int key=12;
+        public int PrintPrivateProperty()
+        {
+            return key;
+        }
+        public static void Main()
+        {
+            ClassTwo obj2 = new ClassTwo();
+            ClassOne obj = new ClassOne();
+            var before = obj.PrintPrivateProperty();
+            Console.WriteLine("Before: " + before);
+            var after = obj2.ChangePrivateProperty(ref obj.key);  
+            Console.WriteLine("After: " + after);   
 
-    public class ClassOne
-    {
-        static void Main(string[] args)
-        {
-            var classOne = new ClassOne();
-            var classTwo = new ClassTwo();
-            ChangePropertyDelegate delegateMethod = classOne.SetMyProperty;
-            classOne.ShowValue();
-            classTwo.InvokeDelegate(delegateMethod);
-            classOne.ShowValue();
-        }
-        private int MyProperty { get; set; }
-        public void SetMyProperty(int value)
-        {
-            MyProperty = value;
-        }
-        public void ShowValue()
-        {
-            Console.WriteLine($"MyProperty = {MyProperty}");
-        }
-        public delegate void ChangePropertyDelegate(int value);
 
+        }
     }
     public class ClassTwo
     {
-        public void InvokeDelegate(ChangePropertyDelegate delegateMethod)
+        public int ChangePrivateProperty(ref int key)
         {
-            int i = int.Parse(Console.ReadLine());
-            delegateMethod(i);
+            key = 10;
+            return key;
         }
-         
+
     }
+    
+
+    
 
 
 }
